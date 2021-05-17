@@ -1,0 +1,100 @@
+create schema user;
+use user;
+
+create table buyer(
+	buyer_id integer primary key AUTO_INCREMENT,
+       	 name varchar(20) not null,
+	email varchar(20) not null,
+	phone_number bigint not null,
+	password varchar(20) not null,
+	is_privileged varchar(5) ,
+	reward_points integer,
+	is_active varchar(5)  );		
+	
+
+
+
+insert into buyer values(101,'Liam','liam@gmail.com',9009009001,'Liam*101','true',10,'true');
+insert into buyer values(102,'Noah','noah@gmail.com',9009009002,'Noah#102','false',10,'true');
+insert into buyer values(103,'Oliver','oliver@gmail.com',9009009003,'Oliver!103','false',10,'true');
+insert into buyer values(104,'Elijah','elijah@gmail.com',9009009004,'Elijah@104','true',10,'true');
+insert into buyer values(105,'Henry','henry@gmail.com',9009009005,'Henry#105','true',10,'true');
+insert into buyer values(106,'Alex','alex@gmail.com',9009009006,'Alex*106','true',10,'true');
+
+create table seller(
+seller_id integer primary key AUTO_INCREMENT,
+name varchar(30) not null,
+email varchar(20) not null,
+phone_number bigint not null,
+password varchar(25) not null,
+is_active varchar(10)
+);
+
+insert into seller values(201,'cloudtail india','cloudtail@gmail.com',8008008001,'Clouds01*','true');
+insert into seller values(202,'tcns clothing','tcns@gmail.com',8008008002,'Tcnss02#','false');
+insert into seller values(203,'shoppers stop','shoppers@gmail.com',8008008003,'Shopperss03!','false');
+insert into seller values(204,'clovia','clovia@gmail.com',8008008004,'Clovias04*','true');
+insert into seller values(205,'nykaa','nykaa@gmail.com',8008008005,'Nykaas05#','true');
+insert into seller values(206,'jockeyindia','jockey@gmail.com',8008008006,'Jockeys06&','false');
+
+
+create table wishlist(
+buyer_id integer not null foreign key refrences buyer(buyer_id),
+product_id integer not null
+);
+insert into wishlist values(101,301);
+insert into wishlist values(101,305);
+insert into wishlist values(103,302);
+insert into wishlist values(104,301);
+insert into wishlist values(104,302);
+insert into wishlist values(104,303);
+insert into wishlist values(105,306);
+insert into wishlist values(105,305);
+
+create table cart(
+buyer_id integer not null foreign key refrences buyer(buyer_id),
+prod_id integer not null,
+quantity integer);
+
+insert into cart values(102,303,2);
+
+create schema product_db;
+use product_db;
+
+ 
+create table product(
+prod_id integer primary key AUTO_INCREMENT,
+product_name varchar(100),
+price decimal(7,2),
+stock integer,
+description varchar(500),
+image varchar(30),
+seller_id integer,
+category varchar(30),
+sub_category varchar(30),
+product_rating decimal(3,2) );
+
+
+insert into product values(301,'Samsung Galaxy M31',14999.00,15,'Ocean blue colour, 6GB/128GB, Exynos 9611 Processor 2.3GHz Octa Core, 64MP Quad Camera, 6.4 inches display,6000 mAh Battery ','samsung-galaxyM31.png',201,'Mobiles','SmartPhones',4.5);
+insert into product values(302,'Redmi 9',8499,30,'Carbon black colour, 4GB/64GB, Helio G35 Processor 2.3GHz Octa Core, 13+2MP Rear Camera, 6.53-inch Display, 5000 mAh Battery', 'redmi-9.png',201,'Mobiles','SmartPhones',4); 
+insert into product values(303,'Relame 8',16999,25,'Cyber silver colour, 8GB/128GB, MediaTekHelio G95 Processor 2.3GHz Octa Core, 64MP Quad Camera, 6.4-inch Display, 5000 mAh Battery', 'realme-8.png',201,'Mobiles','SmartPhones',4.3); 
+insert into product values(304,'Mi 4A PRO 80 cm(32 inch)',14999,18 ,' Android TV with Google Data Saver, HD Ready 1366 x 768 Pixels, 20 W Sound Output, 3 x HDMI, 2 x USB, 2 Speakers, 60 Hz Refresh Rate, LED, Built in Wi-Fi','mi-4aTV.png',201,'Electronics','Televisions',4.3);
+insert into product values(305,'Realme 80 cm(32 inch) HD Ready LED TV',15999,20, ' Android TV, HD Ready 1366 x 768 Pixels, 24 W Sound Output, 3 x HDMI, 2 x USB, 4 Speakers, 60 Hz Refresh Rate, LED, Built in Wi-Fi','realme-80TV.png',201,'Electronics','Televisions',4.6);
+insert into product values(306,'Samsung 80 cm(32 inch) HD Ready LED Smart TV',16999,20, 'HD Ready 1366 x 768 Pixels, 20 W Sound Output, 2 x HDMI, 1 x USB, 2 Speakers, 60 Hz Refresh Rate, LED, Built in Wi-Fi','samsung-80TV.png',201,'Electronics','Televisions',4.4);
+
+
+
+create table subscribedproduct(
+buyer_id integer,
+prod_id integer,
+quantity integer,
+primary key(buyer_id,prod_id) );
+
+insert into subscribedproduct values(101,301,2);
+insert into subscribedproduct values(101,305,1);
+insert into subscribedproduct values(103,302,2);
+insert into subscribedproduct values(104,301,3);
+insert into subscribedproduct values(104,302,5);
+insert into subscribedproduct values(104,303,1);
+insert into subscribedproduct values(105,306,1);
+insert into subscribedproduct values(105,305,3);
