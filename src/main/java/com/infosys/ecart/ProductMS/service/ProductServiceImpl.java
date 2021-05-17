@@ -101,7 +101,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	//service methods on subscribedProduct table
-	public String addProductToWishlist(SubscribedProuctDTO subscribedProductDTO) {
+	public String addProductToSubscribedlist(SubscribedProuctDTO subscribedProductDTO) {
 
 		SubscribedProduct s = new SubscribedProduct();
 		s.setBuyerId(subscribedProductDTO.getBuyerId());
@@ -110,12 +110,12 @@ public class ProductServiceImpl implements ProductService{
 		
 		SubscribedProduct sp = subscribedProductRepository.save(s);
 		if(sp != null) {
-			return "Product is successfully added to the Wishlist.";
+			return "Product is successfully added to the Subscriptionlist.";
 		}else {
 				return "Something went wrong.";
 			}
 	}
-	public String removeProductFromWishlist(String prodId) {
+	public String removeProductFromSubscribedlist(Integer prodId) {
 		
 		long count = subscribedProductRepository.count();
 		
@@ -128,9 +128,10 @@ public class ProductServiceImpl implements ProductService{
 		return "Something went wrong.";
 	}
 	
+	
 	//methods for seller
 	
-	public List<ProductDTO> viewProductsBySellerId(String sellerId){
+	public List<ProductDTO> viewProductsBySellerId(Integer sellerId){
 		
 		Iterable<Product> iterable = productRepository.findBySellerId(sellerId);
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
@@ -155,11 +156,10 @@ public class ProductServiceImpl implements ProductService{
 		return list;
 	}
 	
-	public String addProduct(ProductDTO productDTO) {
+	public Integer addProduct(ProductDTO productDTO) {
 		
 		Product p = new Product();
 		
-		p.setProdId(productDTO.getProdId());
 		p.setProductName(productDTO.getProductName());
 		p.setPrice(productDTO.getPrice());
 		p.setStock(productDTO.getStock());
@@ -174,7 +174,7 @@ public class ProductServiceImpl implements ProductService{
 		return p.getProdId();
 	}
 	
-	public String removeProduct(String prodId) {
+	public String removeProduct(Integer prodId) {
 		
 		long count = productRepository.count();
 		
@@ -188,7 +188,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 
-	public ProductDTO viewProductByProdId(String prodId) {
+	public ProductDTO viewProductByProdId(Integer prodId) {
 		
 		Optional<Product> optional = productRepository.findById(prodId);
 		Product product = optional.orElseThrow();

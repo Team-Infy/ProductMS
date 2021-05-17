@@ -10,14 +10,14 @@ public interface ProductService {
 	List<ProductDTO> viewProducts();
 	List<ProductDTO> searchProductsByCategory(String category);
 	List<ProductDTO> searchProductsByProductName(String productName);
-	String addProductToWishlist(SubscribedProuctDTO subscribedProductDTO);
-	String removeProductFromWishlist(String prodId);
+	String addProductToSubscribedlist(SubscribedProuctDTO subscribedProductDTO);
+	String removeProductFromSubscribedlist(Integer prodId);
 	
 	//methods handled by seller
-	String addProduct(ProductDTO productDTO);
-	String removeProduct(String prodId);
-	ProductDTO viewProductByProdId(String prodId);
-	List<ProductDTO> viewProductsBySellerId(String sellerId);
+	Integer addProduct(ProductDTO productDTO);
+	String removeProduct(Integer prodId);
+	ProductDTO viewProductByProdId(Integer prodId);
+	List<ProductDTO> viewProductsBySellerId(Integer sellerId);
 	String updateStockAfterOrder(ProductDTO productDTO,Integer quantity);
 	String addStockToProducts(ProductDTO productDTO,Integer quantity);
 }

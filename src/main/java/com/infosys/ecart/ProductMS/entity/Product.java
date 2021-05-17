@@ -9,21 +9,21 @@ import javax.persistence.Id;
 public class Product {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String prodId;
+	private Integer prodId;
 	private String productName;
 	private Float price;
 	private Integer stock;
 	private String description;
 	private String image;
-	private String sellerId;
+	private Integer sellerId;
 	private String category;
 	private String subCategory;
 	private Integer productRating;
 	
-	public String getProdId() {
+	public Integer getProdId() {
 		return prodId;
 	}
-	public void setProdId(String prodId) {
+	public void setProdId(Integer prodId) {
 		this.prodId = prodId;
 	}
 	public String getProductName() {
@@ -56,10 +56,10 @@ public class Product {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public String getSellerId() {
+	public Integer getSellerId() {
 		return sellerId;
 	}
-	public void setSellerId(String sellerId) {
+	public void setSellerId(Integer sellerId) {
 		this.sellerId = sellerId;
 	}
 	public String getCategory() {

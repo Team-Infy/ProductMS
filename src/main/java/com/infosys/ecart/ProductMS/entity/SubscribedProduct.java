@@ -6,25 +6,24 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
-@IdClass(CompositePK.class)
+@IdClass(CompositeIDclass.class)
 @Table(name="subscribedproduct")
 public class SubscribedProduct {
 	@Id
-	private String buyerId;
+	private Integer buyerId;
 	@Id
-	private String prodId;
+	private Integer prodId;
 	private Integer quantity;
-	
-	public String getBuyerId() {
+	public Integer getBuyerId() {
 		return buyerId;
 	}
-	public void setBuyerId(String buyerId) {
+	public void setBuyerId(Integer buyerId) {
 		this.buyerId = buyerId;
 	}
-	public String getProdId() {
+	public Integer getProdId() {
 		return prodId;
 	}
-	public void setProdId(String prodId) {
+	public void setProdId(Integer prodId) {
 		this.prodId = prodId;
 	}
 	public Integer getQuantity() {
@@ -33,5 +32,6 @@ public class SubscribedProduct {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+	
 
 }

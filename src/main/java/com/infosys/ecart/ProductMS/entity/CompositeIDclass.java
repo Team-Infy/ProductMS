@@ -1,11 +1,15 @@
-package com.infosys.ecart.ProductMS.dto;
+package com.infosys.ecart.ProductMS.entity;
 
+import java.io.Serializable;
 
-public class SubscribedProuctDTO {
-
+public class CompositeIDclass implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private Integer buyerId;
 	private Integer prodId;
-	private Integer quantity;
+	
+	public CompositeIDclass() {
+	}
 	public Integer getBuyerId() {
 		return buyerId;
 	}
@@ -17,12 +21,5 @@ public class SubscribedProuctDTO {
 	}
 	public void setProdId(Integer prodId) {
 		this.prodId = prodId;
-	}
-	public Integer getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-	
+	}	
 }

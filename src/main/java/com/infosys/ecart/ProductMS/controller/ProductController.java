@@ -41,30 +41,33 @@ public class ProductController {
 		return productService.searchProductsByProductName(productName);
 	}
 	
-	//adding a product to wishlist
-	@PostMapping("/wishlist/add/")
-	public String addToWishlist(@RequestBody SubscribedProuctDTO subscribedProductDTO) {
-		return productService.addProductToWishlist(subscribedProductDTO);
+	
+	//adding a product to subscription list
+	@PostMapping("/subscription/add/")
+	public String addToSubscriptionlist(@RequestBody SubscribedProuctDTO subscribedProductDTO) {
+		//this method uses the endpoints of Order to place order
+		return productService.addProductToSubscribedlist(subscribedProductDTO);
 	}
 	
-	//removing a product from wishlist
-	@DeleteMapping("/wishlist/remove/{prodId}")
-	public String removeFromWishlist(@PathVariable String prodId) {
-		return productService.removeProductFromWishlist(prodId);
+	//removing a product from subscription list
+	@DeleteMapping("/subscription/remove/{prodId}")
+	public String removeFromSubscriptionlist(@PathVariable Integer prodId) {
+		return productService.removeProductFromSubscribedlist(prodId);
 	}
+	
 	
 	
 	//-------------------seller methods----------------------
 	
 	//fetches all products under his id
 	@GetMapping("/seller/viewProducts/{sellerId}")
-	public List<ProductDTO> viewSellerProducts(@PathVariable String sellerId) {
+	public List<ProductDTO> viewSellerProducts(@PathVariable Integer sellerId) {
 		return productService.viewProductsBySellerId(sellerId);
 	}
 	
 	//fecthes a particular product
 	@GetMapping("/seller/viewProduct/{prodId}")
-	public ProductDTO viewProductsByProdId(@PathVariable String prodId){
+	public ProductDTO viewProductByProdId(@PathVariable Integer prodId){
 		return productService.viewProductByProdId(prodId);
 	}
 	
@@ -76,7 +79,7 @@ public class ProductController {
 	
 	//removing an existing product by seller
 	@DeleteMapping("/seller/removeProduct/{prodId}")
-	public String removeProduct(@PathVariable String prodId) {
+	public String removeProduct(@PathVariable Integer prodId) {
 		return productService.removeProduct(prodId);
 	}
 	
