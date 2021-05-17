@@ -1,13 +1,21 @@
 package com.infosys.ecart.ProductMS.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class ProductDTO {
 	
 	private Integer prodId;
+	@Pattern(regexp="[A-Za-z]+( [A-Za-z]+)*", message="{name.error}")
 	private String productName;
+	@Min(value=200, message="{price.error}")
 	private Float price;
+	@Min(value=10, message="{stock.error}")
 	private Integer stock;
+	@Size(max=500, message="{description.error}")
 	private String description;
+	@Pattern(regexp="\\w+[.](png|jpeg)", message="{image.error}")
 	private String image;
 	private Integer sellerId;
 	private String category;

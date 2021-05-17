@@ -156,7 +156,7 @@ public class ProductServiceImpl implements ProductService{
 		return list;
 	}
 	
-	public Integer addProduct(ProductDTO productDTO) {
+	public Integer addProduct(ProductDTO productDTO) throws Exception{
 		
 		Product p = new Product();
 		
