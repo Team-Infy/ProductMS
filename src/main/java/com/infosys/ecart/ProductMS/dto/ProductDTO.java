@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 public class ProductDTO {
 	
 	private Integer prodId;
-	@Pattern(regexp="[A-Za-z]+( [A-Za-z]+)*", message="{name.error}")
+	@Pattern(regexp="[A-Za-z]+( [A-Za-z0-9]+)*", message="{name.error}")
 	private String productName;
 	@Min(value=200, message="{price.error}")
 	private Float price;
@@ -15,7 +15,7 @@ public class ProductDTO {
 	private Integer stock;
 	@Size(max=500, message="{description.error}")
 	private String description;
-	@Pattern(regexp="\\w+[.](png|jpeg)", message="{image.error}")
+	@Pattern(regexp="[A-Za-z0-9-]+[.](png|jpeg)", message="{image.error}")
 	private String image;
 	private Integer sellerId;
 	private String category;
