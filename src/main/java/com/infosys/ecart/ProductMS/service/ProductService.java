@@ -4,23 +4,28 @@ import java.util.List;
 
 import com.infosys.ecart.ProductMS.dto.ProductDTO;
 import com.infosys.ecart.ProductMS.dto.SubscribedProuctDTO;
+import com.infosys.ecart.ProductMS.exception.ProductMSException;
 
 public interface ProductService {
 
 	//common methods for normal buyers and visitors
-	List<ProductDTO> viewProducts();
-	List<ProductDTO> searchProductsByCategory(String category);
-	List<ProductDTO> searchProductsByProductName(String productName);
+	List<ProductDTO> viewProducts() throws ProductMSException;
+	List<ProductDTO> searchProductsByCategory(String category) throws ProductMSException;
+	List<ProductDTO> searchProductsByProductName(String productName) throws ProductMSException;
 	
 	//extra methods for privileged buyers
-	String addProductToSubscribedlist(SubscribedProuctDTO subscribedProductDTO);
-	String removeProductFromSubscribedlist(Integer prodId);
+	String addProductToSubscribedlist(SubscribedProuctDTO subscribedProductDTO) throws ProductMSException;
+	String removeProductFromSubscribedlist(Integer prodId) throws ProductMSException;
+	List<SubscribedProuctDTO> viewSubscribedlist(String buyerId) throws ProductMSException;
 	
 	//methods handled by seller
-	Integer addProduct(ProductDTO productDTO) throws Exception;
-	String removeProduct(Integer prodId);
-	ProductDTO viewProductByProdId(Integer prodId);
-	List<ProductDTO> viewProductsBySellerId(Integer sellerId);
-	String updateStockAfterOrder(ProductDTO productDTO,Integer quantity);
-	String addStockToProducts(ProductDTO productDTO,Integer quantity);
+	Integer addProduct(ProductDTO productDTO) throws ProductMSException;
+	String removeProduct(Integer prodId) throws ProductMSException;
+	ProductDTO viewProductByProdId(Integer prodId) throws ProductMSException;
+	List<ProductDTO> viewProductsBySellerId(String sellerId) throws ProductMSException;
+	String addStockToProducts(ProductDTO productDTO,Integer quantity) throws ProductMSException;
+	
+	//for ordering a product
+	ProductDTO getPriceAndStock(Integer prodId) throws ProductMSException;
+	void updateStockAfterOrder(ProductDTO productDTO) throws ProductMSException;
 }

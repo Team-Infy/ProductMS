@@ -10,14 +10,14 @@ import javax.persistence.Table;
 @Table(name="subscribedproduct")
 public class SubscribedProduct {
 	@Id
-	private Integer buyerId;
+	private String buyerId;
 	@Id
 	private Integer prodId;
 	private Integer quantity;
-	public Integer getBuyerId() {
+	public String getBuyerId() {
 		return buyerId;
 	}
-	public void setBuyerId(Integer buyerId) {
+	public void setBuyerId(String buyerId) {
 		this.buyerId = buyerId;
 	}
 	public Integer getProdId() {

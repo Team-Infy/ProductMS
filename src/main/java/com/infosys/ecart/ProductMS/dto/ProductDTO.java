@@ -7,17 +7,17 @@ import javax.validation.constraints.Size;
 public class ProductDTO {
 	
 	private Integer prodId;
-	@Pattern(regexp="[A-Za-z]+( [A-Za-z0-9]+)*", message="{name.error}")
+	@Pattern(regexp="[A-Za-z]+( [A-Za-z0-9]+)*", message="Name should contain only alphabets and space. And should not start or end with a spaces")
 	private String productName;
-	@Min(value=200, message="{price.error}")
+	@Min(value=200, message="Price should be minimum of 200")
 	private Float price;
-	@Min(value=10, message="{stock.error}")
+	@Min(value=10, message="Stock should be minimum of 10")
 	private Integer stock;
-	@Size(max=500, message="{description.error}")
+	@Size(max=500, message="Description should be within 500 characters")
 	private String description;
-	@Pattern(regexp="[A-Za-z0-9-]+[.](png|jpeg)", message="{image.error}")
+	@Pattern(regexp="[A-Za-z0-9-]+[.](png|jpeg)", message="Image uri should be in png/jpeg format")
 	private String image;
-	private Integer sellerId;
+	private String sellerId;
 	private String category;
 	private String subCategory;
 	private Integer productRating;
@@ -58,10 +58,10 @@ public class ProductDTO {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public Integer getSellerId() {
+	public String getSellerId() {
 		return sellerId;
 	}
-	public void setSellerId(Integer sellerId) {
+	public void setSellerId(String sellerId) {
 		this.sellerId = sellerId;
 	}
 	public String getCategory() {

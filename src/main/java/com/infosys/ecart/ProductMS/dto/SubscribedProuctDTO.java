@@ -3,13 +3,13 @@ package com.infosys.ecart.ProductMS.dto;
 
 public class SubscribedProuctDTO {
 
-	private Integer buyerId;
+	private String buyerId;
 	private Integer prodId;
 	private Integer quantity;
-	public Integer getBuyerId() {
+	public String getBuyerId() {
 		return buyerId;
 	}
-	public void setBuyerId(Integer buyerId) {
+	public void setBuyerId(String buyerId) {
 		this.buyerId = buyerId;
 	}
 	public Integer getProdId() {

@@ -15,17 +15,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.infosys.ecart.ProductMS.dto.ProductDTO;
 import com.infosys.ecart.ProductMS.dto.SubscribedProuctDTO;
+import com.infosys.ecart.ProductMS.exception.ProductMSException;
 import com.infosys.ecart.ProductMS.service.ProductService;
 
-@RestController
-@RequestMapping
 @CrossOrigin
+@RestController
+@Valid
 public class ProductController {
 	
 	@Autowired
@@ -35,35 +34,43 @@ public class ProductController {
 	Environment environment;
 	
 	//fetches all products 
-	@GetMapping("/viewProducts")
-	public List<ProductDTO> viewAllProducts() {
+	@GetMapping("/viewAllProducts")
+	public List<ProductDTO> viewAllProducts()  throws ProductMSException{
 		return productService.viewProducts();
 	}
 	
 	//fetches products based on their category
 	@GetMapping("/viewProducts/category/{category}")
-	public List<ProductDTO> viewProductsByCategory(@PathVariable String category){
+	public List<ProductDTO> viewProductsByCategory(@PathVariable String category) throws ProductMSException{
 		return productService.searchProductsByCategory(category);
 	}
 	
 	//fetches products based on their productName
 	@GetMapping("/viewProducts/productname/{productName}")
-	public List<ProductDTO> viewProductsByProductName(@PathVariable String productName){
+	public List<ProductDTO> viewProductsByProductName(@PathVariable String productName) throws ProductMSException{
 		return productService.searchProductsByProductName(productName);
 	}
 	
 	
 	//adding a product to subscription list
 	@PostMapping("/subscription/add/")
-	public String addToSubscriptionlist(@RequestBody SubscribedProuctDTO subscribedProductDTO) {
-		//this method uses the endpoints of Order to place order
+	public String addToSubscriptionlist(@RequestBody SubscribedProuctDTO subscribedProductDTO)  throws ProductMSException{
+//		//this method uses the endpoints of Order to place order
+//		String uri = "http://localhost:8200/order";
+//		RestTemplate rest = new RestTemplate();
+//		Integer orderId = rest.postForObject(uri, subscribedProductDTO, Integer.class);
 		return productService.addProductToSubscribedlist(subscribedProductDTO);
 	}
 	
 	//removing a product from subscription list
 	@DeleteMapping("/subscription/remove/{prodId}")
-	public String removeFromSubscriptionlist(@PathVariable Integer prodId) {
+	public String removeFromSubscriptionlist(@PathVariable Integer prodId) throws ProductMSException {
 		return productService.removeProductFromSubscribedlist(prodId);
+	}
+	
+	@GetMapping("/subscription/view/{buyerId}")
+	public List<SubscribedProuctDTO> viewSubscriptionlist(@PathVariable String buyerId)  throws ProductMSException{
+		return productService.viewSubscribedlist(buyerId);
 	}
 	
 	
@@ -72,45 +79,45 @@ public class ProductController {
 	
 	//fetches all products under his id
 	@GetMapping("/seller/viewProducts/{sellerId}")
-	public List<ProductDTO> viewSellerProducts(@PathVariable Integer sellerId) {
+	public List<ProductDTO> viewSellerProducts(@PathVariable String sellerId) throws ProductMSException {
 		return productService.viewProductsBySellerId(sellerId);
 	}
 	
 	//fecthes a particular product
 	@GetMapping("/seller/viewProduct/{prodId}")
-	public ProductDTO viewProductByProdId(@PathVariable Integer prodId){
+	public ProductDTO viewProductByProdId(@PathVariable Integer prodId) throws ProductMSException{
 		return productService.viewProductByProdId(prodId);
 	}
 	
 	//adding a new product by seller
 	@PostMapping("/seller/addProduct")
-	public ResponseEntity<String> addProduct(@Valid @RequestBody ProductDTO productDTO) throws Exception{
-		
-		try {
+	public ResponseEntity<String> addProduct(@Valid @RequestBody ProductDTO productDTO)  throws ProductMSException{
 			String msg = "Your product is added with product ID : "+productService.addProduct(productDTO);
 			return new ResponseEntity<>(msg,HttpStatus.OK);
-		}
-		catch(Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,environment.getProperty(e.getMessage()));
-		}
 	}
 	
 	//removing an existing product by seller
 	@DeleteMapping("/seller/removeProduct/{prodId}")
-	public String removeProduct(@PathVariable Integer prodId) {
+	public String removeProduct(@PathVariable Integer prodId) throws ProductMSException {
 		return productService.removeProduct(prodId);
-	}
-	
-	//updating the stock after accepting a order
-	@PutMapping("/seller/updateStock/{quantity}")
-	public String updateStockAFterOrder(@RequestBody ProductDTO productDTO,@PathVariable Integer quantity) {
-		return productService.updateStockAfterOrder(productDTO,quantity);
 	}
 	
 	//adding more stocks to an existing product
 	@PutMapping("/seller/addStock/{quantity}")
-	public String addStockToProduct(@RequestBody ProductDTO productDTO,@PathVariable Integer quantity) {
+	public String addStockToProduct(@RequestBody ProductDTO productDTO,@PathVariable Integer quantity) throws ProductMSException {
 		return productService.addStockToProducts(productDTO, quantity);
 	}
 	
+	
+	@GetMapping("/viewProducts/priceAndStock/{prodId}")
+	public ProductDTO getPriceAndStockForAProduct(@PathVariable Integer prodId) throws ProductMSException {
+		return productService.getPriceAndStock(prodId);
+	}
+	
+	//updating the stock after accepting a order
+	@PutMapping("/updateStock")
+	public void updateStockAFterOrder(@RequestBody ProductDTO productDTO)  throws ProductMSException{
+		productService.updateStockAfterOrder(productDTO);
+	}
+		
 }

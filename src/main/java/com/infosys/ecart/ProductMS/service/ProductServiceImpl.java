@@ -13,6 +13,7 @@ import com.infosys.ecart.ProductMS.dto.ProductDTO;
 import com.infosys.ecart.ProductMS.dto.SubscribedProuctDTO;
 import com.infosys.ecart.ProductMS.entity.Product;
 import com.infosys.ecart.ProductMS.entity.SubscribedProduct;
+import com.infosys.ecart.ProductMS.exception.ProductMSException;
 import com.infosys.ecart.ProductMS.repository.ProductRepository;
 import com.infosys.ecart.ProductMS.repository.SubscribedProductRepository;
 
@@ -26,7 +27,7 @@ public class ProductServiceImpl implements ProductService{
 	@Autowired
 	SubscribedProductRepository subscribedProductRepository;
 	
-	public List<ProductDTO> viewProducts(){
+	public List<ProductDTO> viewProducts() throws ProductMSException{
 		
 		Iterable<Product> iterable = productRepository.findAll();
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
@@ -50,7 +51,7 @@ public class ProductServiceImpl implements ProductService{
 		
 		return list;
 	}
-	public List<ProductDTO> searchProductsByCategory(String category){
+	public List<ProductDTO> searchProductsByCategory(String category) throws ProductMSException{
 		
 		Iterable<Product> iterable = productRepository.findByCategory(category);
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
@@ -75,7 +76,7 @@ public class ProductServiceImpl implements ProductService{
 		return list;
 	}
 
-	public List<ProductDTO> searchProductsByProductName(String productName){
+	public List<ProductDTO> searchProductsByProductName(String productName) throws ProductMSException{
 		
 		Iterable<Product> iterable = productRepository.findByProductName(productName);
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
@@ -101,7 +102,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	//service methods on subscribedProduct table
-	public String addProductToSubscribedlist(SubscribedProuctDTO subscribedProductDTO) {
+	public String addProductToSubscribedlist(SubscribedProuctDTO subscribedProductDTO) throws ProductMSException{
 
 		SubscribedProduct s = new SubscribedProduct();
 		s.setBuyerId(subscribedProductDTO.getBuyerId());
@@ -115,7 +116,7 @@ public class ProductServiceImpl implements ProductService{
 				return "Something went wrong.";
 			}
 	}
-	public String removeProductFromSubscribedlist(Integer prodId) {
+	public String removeProductFromSubscribedlist(Integer prodId) throws ProductMSException{
 		
 		long count = subscribedProductRepository.count();
 		
@@ -128,10 +129,26 @@ public class ProductServiceImpl implements ProductService{
 		return "Something went wrong.";
 	}
 	
+
+	public List<SubscribedProuctDTO> viewSubscribedlist(String buyerId) throws ProductMSException{
+		List<SubscribedProduct> l = subscribedProductRepository.findByBuyerId(buyerId);
+		List<SubscribedProuctDTO> list = new ArrayList<SubscribedProuctDTO>();
+		
+		for(SubscribedProduct subscribedProduct : l) {
+		SubscribedProuctDTO s = new SubscribedProuctDTO();
+		s.setBuyerId(subscribedProduct.getBuyerId());
+		s.setProdId(subscribedProduct.getProdId());
+		s.setQuantity(subscribedProduct.getQuantity());
+		
+		list.add(s);
+		}
+		return list;
+	}
+	
 	
 	//methods for seller
 	
-	public List<ProductDTO> viewProductsBySellerId(Integer sellerId){
+	public List<ProductDTO> viewProductsBySellerId(String sellerId) throws ProductMSException{
 		
 		Iterable<Product> iterable = productRepository.findBySellerId(sellerId);
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
@@ -156,7 +173,7 @@ public class ProductServiceImpl implements ProductService{
 		return list;
 	}
 	
-	public Integer addProduct(ProductDTO productDTO) throws Exception{
+	public Integer addProduct(ProductDTO productDTO)  throws ProductMSException{
 		
 		Product p = new Product();
 		
@@ -174,7 +191,7 @@ public class ProductServiceImpl implements ProductService{
 		return p.getProdId();
 	}
 	
-	public String removeProduct(Integer prodId) {
+	public String removeProduct(Integer prodId) throws ProductMSException {
 		
 		long count = productRepository.count();
 		
@@ -188,7 +205,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 
-	public ProductDTO viewProductByProdId(Integer prodId) {
+	public ProductDTO viewProductByProdId(Integer prodId)  throws ProductMSException{
 		
 		Optional<Product> optional = productRepository.findById(prodId);
 		Product product = optional.orElseThrow();
@@ -209,16 +226,8 @@ public class ProductServiceImpl implements ProductService{
 		return p;
 	}
 	
-	public String updateStockAfterOrder(ProductDTO productDTO,Integer quantity) {
-		
-		Optional<Product> optional = productRepository.findById(productDTO.getProdId());
-		Product p = optional.orElseThrow();
-		p.setStock(p.getStock()-quantity);
-		productRepository.save(p);
-		return p.getProdId()+" Updated Successfully";
-	}
 
-	public String addStockToProducts(ProductDTO productDTO,Integer quantity) {
+	public String addStockToProducts(ProductDTO productDTO,Integer quantity)  throws ProductMSException{
 
 		Optional<Product> optional = productRepository.findById(productDTO.getProdId());
 		Product p = optional.orElseThrow();
@@ -227,4 +236,21 @@ public class ProductServiceImpl implements ProductService{
 		return p.getProdId()+" Updated Successfully";
 	}
 
+
+	public ProductDTO getPriceAndStock(Integer prodId)  throws ProductMSException{
+		
+		Optional<Product> optional = productRepository.findById(prodId);
+		Product p = optional.orElseThrow();
+		ProductDTO pDTO = new ProductDTO();
+		pDTO.setPrice(p.getPrice());
+		pDTO.setStock(p.getStock());
+		return pDTO;
+	}
+	public void updateStockAfterOrder(ProductDTO productDTO) throws ProductMSException {
+		
+		Optional<Product> optional = productRepository.findById(productDTO.getProdId());
+		Product p = optional.orElseThrow();
+		p.setStock(productDTO.getStock());
+		productRepository.save(p);
+	}
 }

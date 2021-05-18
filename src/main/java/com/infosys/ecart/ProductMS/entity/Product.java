@@ -15,7 +15,7 @@ public class Product {
 	private Integer stock;
 	private String description;
 	private String image;
-	private Integer sellerId;
+	private String sellerId;
 	private String category;
 	private String subCategory;
 	private Integer productRating;
@@ -56,10 +56,10 @@ public class Product {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public Integer getSellerId() {
+	public String getSellerId() {
 		return sellerId;
 	}
-	public void setSellerId(Integer sellerId) {
+	public void setSellerId(String sellerId) {
 		this.sellerId = sellerId;
 	}
 	public String getCategory() {

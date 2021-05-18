@@ -3,38 +3,37 @@ use product_db;
 
  
 create table product(
-prod_id integer primary key AUTO_INCREMENT,
+prod_id integer primary key auto_increment,
 product_name varchar(100),
 price decimal(7,2),
 stock integer,
 description varchar(500),
 image varchar(30),
-seller_id integer,
+seller_id varchar(5),
 category varchar(30),
-sub_category varchar(30),
+subcategory varchar(30),
 product_rating decimal(3,2) );
 
 
-insert into product values(301,'Samsung Galaxy M31',14999.00,15,'Ocean blue colour, 6GB/128GB, Exynos 9611 Processor 2.3GHz Octa Core, 64MP Quad Camera, 6.4 inches display,6000 mAh Battery ','samsung-galaxyM31.png',201,'Mobiles','SmartPhones',4.5);
-insert into product values(302,'Redmi 9',8499,30,'Carbon black colour, 4GB/64GB, Helio G35 Processor 2.3GHz Octa Core, 13+2MP Rear Camera, 6.53-inch Display, 5000 mAh Battery', 'redmi-9.png',201,'Mobiles','SmartPhones',4); 
-insert into product values(303,'Relame 8',16999,25,'Cyber silver colour, 8GB/128GB, MediaTekHelio G95 Processor 2.3GHz Octa Core, 64MP Quad Camera, 6.4-inch Display, 5000 mAh Battery', 'realme-8.png',201,'Mobiles','SmartPhones',4.3); 
-insert into product values(304,'Mi 4A PRO 80 cm(32 inch)',14999,18 ,' Android TV with Google Data Saver, HD Ready 1366 x 768 Pixels, 20 W Sound Output, 3 x HDMI, 2 x USB, 2 Speakers, 60 Hz Refresh Rate, LED, Built in Wi-Fi','mi-4aTV.png',201,'Electronics','Televisions',4.3);
-insert into product values(305,'Realme 80 cm(32 inch) HD Ready LED TV',15999,20, ' Android TV, HD Ready 1366 x 768 Pixels, 24 W Sound Output, 3 x HDMI, 2 x USB, 4 Speakers, 60 Hz Refresh Rate, LED, Built in Wi-Fi','realme-80TV.png',201,'Electronics','Televisions',4.6);
-insert into product values(306,'Samsung 80 cm(32 inch) HD Ready LED Smart TV',16999,20, 'HD Ready 1366 x 768 Pixels, 20 W Sound Output, 2 x HDMI, 1 x USB, 2 Speakers, 60 Hz Refresh Rate, LED, Built in Wi-Fi','samsung-80TV.png',201,'Electronics','Televisions',4.4);
-
-
-
 create table subscribedproduct(
-buyer_id integer,
+buyer_id varchar(5),
 prod_id integer,
 quantity integer,
 primary key(buyer_id,prod_id) );
 
-insert into subscribedproduct values(101,301,2);
-insert into subscribedproduct values(101,305,1);
-insert into subscribedproduct values(103,302,2);
-insert into subscribedproduct values(104,301,3);
-insert into subscribedproduct values(104,302,5);
-insert into subscribedproduct values(104,303,1);
-insert into subscribedproduct values(105,306,1);
-insert into subscribedproduct values(105,305,3);
+
+insert into product values(301,'Samsung Galaxy M31',14999.00,15,'Ocean blue colour, 6GB/128GB, Exynos 9611 Processor 2.3GHz Octa Core, 64MP Quad Camera, 6.4 inches display,6000 mAh Battery ','samsung-galaxyM31.png','S1','Mobiles','SmartPhones',4.5);
+insert into product values(302,'Redmi 9',8499,30,'Carbon black colour, 4GB/64GB, Helio G35 Processor 2.3GHz Octa Core, 13+2MP Rear Camera, 6.53-inch Display, 5000 mAh Battery', 'redmi-9.png','S1','Mobiles','SmartPhones',4); 
+insert into product values(303,'Relame 8',16999,25,'Cyber silver colour, 8GB/128GB, MediaTekHelio G95 Processor 2.3GHz Octa Core, 64MP Quad Camera, 6.4-inch Display, 5000 mAh Battery', 'realme-8.png','S1','Mobiles','SmartPhones',4.3); 
+insert into product values(304,'Mi 4A PRO 80 cm(32 inch)',14999,18 ,' Android TV with Google Data Saver, HD Ready 1366 x 768 Pixels, 20 W Sound Output, 3 x HDMI, 2 x USB, 2 Speakers, 60 Hz Refresh Rate, LED, Built in Wi-Fi','mi-4aTV.png','S2','Electronics','Televisions',4.3);
+insert into product values(305,'Realme 80 cm(32 inch) HD Ready LED TV',15999,20, ' Android TV, HD Ready 1366 x 768 Pixels, 24 W Sound Output, 3 x HDMI, 2 x USB, 4 Speakers, 60 Hz Refresh Rate, LED, Built in Wi-Fi','realme-80TV.png','S2','Electronics','Televisions',4.6);
+insert into product values(306,'Samsung 80 cm(32 inch) HD Ready LED Smart TV',16999,20, 'HD Ready 1366 x 768 Pixels, 20 W Sound Output, 2 x HDMI, 1 x USB, 2 Speakers, 60 Hz Refresh Rate, LED, Built in Wi-Fi','samsung-80TV.png','S3','Electronics','Televisions',4.4);
+
+insert into subscribedproduct values('B1',301,2);
+insert into subscribedproduct values('B1',305,1);
+insert into subscribedproduct values('B3',302,2);
+insert into subscribedproduct values('B4',301,3);
+insert into subscribedproduct values('B4',302,5);
+insert into subscribedproduct values('B4',303,1);
+insert into subscribedproduct values('B5',306,1);
+insert into subscribedproduct values('B5',305,3);

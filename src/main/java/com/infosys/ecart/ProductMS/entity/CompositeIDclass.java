@@ -5,15 +5,15 @@ import java.io.Serializable;
 public class CompositeIDclass implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	private Integer buyerId;
+	private String buyerId;
 	private Integer prodId;
 	
 	public CompositeIDclass() {
 	}
-	public Integer getBuyerId() {
+	public String getBuyerId() {
 		return buyerId;
 	}
-	public void setBuyerId(Integer buyerId) {
+	public void setBuyerId(String buyerId) {
 		this.buyerId = buyerId;
 	}
 	public Integer getProdId() {
