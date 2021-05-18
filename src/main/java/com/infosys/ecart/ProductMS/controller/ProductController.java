@@ -51,6 +51,12 @@ public class ProductController {
 		return productService.searchProductsByProductName(productName);
 	}
 	
+	//fecthes a particular product
+	@GetMapping("/viewProduct/{productId}")
+	public String checkProductByProdId(@PathVariable Integer productId) throws ProductMSException{
+		productService.viewProductByProdId(productId);
+		return "The Product exists in the list";
+	}
 	
 	//adding a product to subscription list
 	@PostMapping("/subscription/add/")
@@ -109,6 +115,8 @@ public class ProductController {
 	}
 	
 	
+	
+	/* Order */
 	@GetMapping("/viewProducts/priceAndStock/{prodId}")
 	public ProductDTO getPriceAndStockForAProduct(@PathVariable Integer prodId) throws ProductMSException {
 		return productService.getPriceAndStock(prodId);

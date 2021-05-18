@@ -31,7 +31,9 @@ public class ProductServiceImpl implements ProductService{
 		
 		Iterable<Product> iterable = productRepository.findAll();
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
-		
+		if(iterable == null) {
+			throw new ProductMSException("Product list is empty.");
+		}
 		for(Product product : iterable) {
 			ProductDTO p = new ProductDTO();
 			
@@ -55,7 +57,9 @@ public class ProductServiceImpl implements ProductService{
 		
 		Iterable<Product> iterable = productRepository.findByCategory(category);
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
-		
+		if(iterable == null) {
+			throw new ProductMSException("Product list is empty.");
+		}
 		for(Product product : iterable) {
 			ProductDTO p = new ProductDTO();
 			
@@ -80,7 +84,9 @@ public class ProductServiceImpl implements ProductService{
 		
 		Iterable<Product> iterable = productRepository.findByProductName(productName);
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
-		
+		if(iterable == null) {
+			throw new ProductMSException("Product list is empty.");
+		}
 		for(Product product : iterable) {
 			ProductDTO p = new ProductDTO();
 			
@@ -152,7 +158,9 @@ public class ProductServiceImpl implements ProductService{
 		
 		Iterable<Product> iterable = productRepository.findBySellerId(sellerId);
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
-		
+		if(iterable == null) {
+			throw new ProductMSException("Product list is empty.");
+		}
 		for(Product product : iterable) {
 			ProductDTO p = new ProductDTO();
 			
@@ -208,7 +216,7 @@ public class ProductServiceImpl implements ProductService{
 	public ProductDTO viewProductByProdId(Integer prodId)  throws ProductMSException{
 		
 		Optional<Product> optional = productRepository.findById(prodId);
-		Product product = optional.orElseThrow();
+		Product product = optional.orElseThrow(()-> new ProductMSException("Not a valid product id."));
 		
 		ProductDTO p = new ProductDTO();
 		
