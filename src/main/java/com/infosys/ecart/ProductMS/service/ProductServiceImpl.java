@@ -156,9 +156,9 @@ public class ProductServiceImpl implements ProductService{
 	
 	public List<ProductDTO> viewProductsBySellerId(String sellerId) throws ProductMSException{
 		
-		Iterable<Product> iterable = productRepository.findBySellerId(sellerId);
+		List<Product> iterable = productRepository.findBySellerId(sellerId);
 		List<ProductDTO> list = new ArrayList<ProductDTO>();
-		if(iterable == null) {
+		if(iterable.isEmpty()) {
 			throw new ProductMSException("Product list is empty.");
 		}
 		for(Product product : iterable) {
@@ -245,14 +245,15 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 
-	public ProductDTO getPriceAndStock(Integer prodId)  throws ProductMSException{
+	public List<Float> getPriceAndStock(Integer prodId)  throws ProductMSException{
 		
 		Optional<Product> optional = productRepository.findById(prodId);
 		Product p = optional.orElseThrow();
-		ProductDTO pDTO = new ProductDTO();
-		pDTO.setPrice(p.getPrice());
-		pDTO.setStock(p.getStock());
-		return pDTO;
+		List<Float> list = new ArrayList<Float>();
+
+		list.add((float)Math.round(p.getPrice()));
+		list.add((float)p.getStock());
+		return list;
 	}
 	public void updateStockAfterOrder(ProductDTO productDTO) throws ProductMSException {
 		

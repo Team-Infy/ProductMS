@@ -118,7 +118,7 @@ public class ProductController {
 	
 	/* Order */
 	@GetMapping("/viewProducts/priceAndStock/{prodId}")
-	public ProductDTO getPriceAndStockForAProduct(@PathVariable Integer prodId) throws ProductMSException {
+	public List<Float> getPriceAndStockForAProduct(@PathVariable Integer prodId) throws ProductMSException {
 		return productService.getPriceAndStock(prodId);
 	}
 	

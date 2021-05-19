@@ -26,6 +26,6 @@ public interface ProductService {
 	String addStockToProducts(ProductDTO productDTO,Integer quantity) throws ProductMSException;
 	
 	//for ordering a product
-	ProductDTO getPriceAndStock(Integer prodId) throws ProductMSException;
+	List<Float> getPriceAndStock(Integer prodId) throws ProductMSException;
 	void updateStockAfterOrder(ProductDTO productDTO) throws ProductMSException;
 }
