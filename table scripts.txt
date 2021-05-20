@@ -58,9 +58,9 @@ price decimal(7,2),
 stock integer,
 description varchar(500),
 image varchar(30),
-sellerid varchar(5),
+seller_id varchar(5),
 category varchar(30),
-subcategory varchar(30),
+sub_category varchar(30),
 product_rating decimal(3,2) );
 
 
